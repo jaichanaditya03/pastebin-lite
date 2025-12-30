@@ -2,13 +2,17 @@
 
 A minimal pastebin application built with Next.js 14, TypeScript, and Upstash Redis.
 
+## Live Demo
+
+- **Deployed URL**: https://pastebin-lite-lemon-five.vercel.app/
+
 ## Features
 
 - Create text pastes with optional expiry time and view limits
 - Share pastes via unique URLs
 - Automatic expiry by time or view count
 - Serverless deployment on Vercel
-- REST-based Redis persistence
+- Serverless Redis persistence using Upstash
 
 ## Tech Stack
 
@@ -17,6 +21,10 @@ A minimal pastebin application built with Next.js 14, TypeScript, and Upstash Re
 - **Styling**: Tailwind CSS
 - **Database**: Upstash Redis
 - **Deployment**: Vercel
+
+## Architecture Notes
+
+This application uses Next.js API routes for backend logic and Upstash Redis as a serverless persistence layer, allowing both frontend and backend to be deployed together on Vercel without a separate server.
 
 ## Getting Started
 
