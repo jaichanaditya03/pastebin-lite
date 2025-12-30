@@ -1,34 +1,25 @@
 import { notFound } from 'next/navigation';
 import { headers } from 'next/headers';
-import { fetchPaste } from '@/lib/paste';
-import { getCurrentTime } from '@/lib/time';
 
-/**
- * Paste view page
- * GET /p/:id
- * Renders paste content safely
- */
 export default async function PastePage({ params }: { params: { id: string } }) {
   const { id } = params;
 
-  // Get headers for TEST_MODE support
   const headersList = headers();
-  const currentTime = getCurrentTime(headersList);
+  const host = headersList.get('host');
+  const protocol =
+    headersList.get('x-forwarded-proto') ?? 'https';
 
-  // Fetch paste (counts as one view)
-  const res = await fetch(
-  `${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/pastes/${id}`,
-  { cache: 'no-store' }
-);
-if (!res.ok) {
-  notFound();
-}
-const paste = await res.json();
+  const baseUrl = `${protocol}://${host}`;
 
+  const res = await fetch(`${baseUrl}/api/pastes/${id}`, {
+    cache: 'no-store',
+  });
 
-  if (!paste) {
+  if (!res.ok) {
     notFound();
   }
+
+  const paste = await res.json();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
